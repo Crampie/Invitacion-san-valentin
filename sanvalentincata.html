@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff0f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(255, 75, 110, 0.2);
+            max-width: 450px;
+            width: 90%;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #ff4b6e;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .photos {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .photos img {
+            width: 140px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 4px solid #ffcad4;
+            animation: sway 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes sway {
+            from { transform: rotate(-3deg); }
+            to { transform: rotate(3deg); }
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            min-height: 200px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 50px;
+            transition: all 0.2s ease;
+        }
+
+        #btn-si {
+            background-color: #ff4b6e;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 75, 110, 0.3);
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #btn-no {
+            background-color: #8d99ae;
+            color: white;
+            position: relative;
+            z-index: 20; 
+        }
+
+        #success-msg {
+            display: none;
+        }
+
+        .invitation-card {
+            background: #ff4b6e;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-container">
+        <div id="quiz-section">
+            <div class="photos">
+                <img src="foto1.jpg.JPEG" alt="Nosotros 1">
+                <img src="foto2.jpg.JPEG" alt="Nosotros 2">
+            </div>
+            <h1>¿Quieres ser mi San Valentín? ❤️</h1>
+            <div class="buttons" id="button-wrapper">
+                <button id="btn-si">SÍ</button>
+                <button id="btn-no">No.</button>
+            </div>
+        </div>
+
+        <div id="success-msg">
+            <h1 style="font-size: 2.5rem;">¡Sabía que dirías que sí! 🥰</h1>
+            <div class="invitation-card">
+                <h2>💌 Invitación Oficial Para Mi Princesa</h2>
+                <p>Tenemos una cita especial</p>
+                <p><strong>📅 Viernes 14 de febrero</strong></p>
+                <p><strong>🕘 Todo el día</strong></p>
+                <p>¡Prepárate para un día hermoso!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btnNo = document.getElementById('btn-no');
+        const btnSi = document.getElementById('btn-si');
+        const quizSection = document.getElementById('quiz-section');
+        const successMsg = document.getElementById('success-msg');
+
+        let noClickCount = 0;
+
+        const frasesNo = [
+            "No.", "¿Estás segura princesita?", "¿De verdad guatonaa?", "Caloo pero piénsalo bien...", "¿Te equivocaste de botón?",
+            "No.", "¿Piensa bien, ¿Estás segura?", "¿De verdad?", "Guatonaa pesada", "¿Te equivocaste de botón?",
+            "Si dices que sí, te debo un chocolate.", "¡Guatona yapoo!",
+            "Estás a un click de que me rinda...", "Bueno, pero si te doy un besito, ¿dices que sí?",
+            "Creo que te estás equivocando sin querer.", "¡Ya me cansé de correr!",
+            "Yapo guatona mi dedo ya se cansó de esquivarte.", "¡Basta, por favor!",
+            "Ok, última oportunidad... ¿Segura?", "¡Ya fue! Me rindo."
+        ];
+
+        btnNo.addEventListener('click', () => {
+            if (noClickCount < frasesNo.length) {
+                btnNo.textContent = frasesNo[noClickCount];
+                noClickCount++;
+
+                // CRECIMIENTO AGRESIVO
+                const scaleValue = 1 + Math.pow(noClickCount, 1.5) * 0.25;
+                btnSi.style.transform = `scale(${scaleValue})`;
+
+                // MOVIMIENTO DEL NO
+                const range = 100 + (noClickCount * 12);
+                const x = (Math.random() - 0.5) * range; 
+                const y = (Math.random() - 0.5) * range;
+                btnNo.style.position = 'absolute';
+                btnNo.style.transform = `translate(${x}px, ${y}px)`;
+
+                // PASO FINAL: Click 20 (El SI se agranda pero espera el click)
+                if (noClickCount === 20) {
+                    setTimeout(() => {
+                        btnSi.style.transition = "all 0.5s ease-in-out";
+                        btnSi.style.position = 'fixed';
+                        btnSi.style.top = '0';
+                        btnSi.style.left = '0';
+                        btnSi.style.width = '100vw';
+                        btnSi.style.height = '100vh';
+                        btnSi.style.margin = '0';
+                        btnSi.style.borderRadius = '0';
+                        btnSi.style.zIndex = '9999'; 
+                        btnSi.style.fontSize = '12rem';
+                        btnSi.style.transform = 'scale(1)'; 
+                        
+                        // El botón NO se oculta para que solo pueda clickear el SI gigante
+                        btnNo.style.display = 'none';
+                    }, 200);
+                }
+            }
+        });
+
+        // La función que realmente activa el éxito
+        btnSi.addEventListener('click', () => {
+            // Solo se activa si el botón ya "ganó" o si es el primer click
+            quizSection.style.display = 'none';
+            successMsg.style.display = 'block';
+            
+            // Ocultamos el botón gigante para ver el mensaje
+            btnSi.style.display = 'none';
+
+            // Efectos de celebración
+            for(let i=0; i<80; i++) {
+                setTimeout(createHeart, i * 40);
+            }
+        });
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.style.cssText = `
+                position: fixed;
+                left: ${Math.random() * 100}vw;
+                top: 100vh;
+                font-size: ${Math.random() * 30 + 20}px;
+                user-select: none;
+                z-index: 10000;
+                animation: moveUp ${Math.random() * 2 + 2}s linear forwards;
+            `;
+            heart.innerHTML = '❤️';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+
+        const style = document.createElement('style');
+        style.innerHTML = `@keyframes moveUp { to { transform: translateY(-120vh) rotate(360deg); opacity: 0; } }`;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
